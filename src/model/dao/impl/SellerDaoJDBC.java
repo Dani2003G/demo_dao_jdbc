@@ -24,6 +24,7 @@ public class SellerDaoJDBC implements SellerDao {
         this.conn = conn;
     }
 
+    // Insert seller
     @Override
     public void insert(Seller obj) {
        PreparedStatement st = null;
@@ -73,10 +74,44 @@ public class SellerDaoJDBC implements SellerDao {
        }
     }
 
+    // Updated seller
     @Override
     public void updated(Seller obj) {
-        // TODO Auto-generated method stub
-        
+        PreparedStatement st = null;
+
+       try {
+            st = conn.prepareStatement(
+                "UPDATE seller "
+                + "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+                + "WHERE Id = ?"
+            );
+
+            if (obj.getId() == null)
+                throw new DbException("Id can't be null");
+            if (obj.getName() == null)
+                throw new DbException("Name can't be null");
+            if (obj.getEmail() == null)
+                throw new DbException("Email can't be null");
+            if (obj.getDepartment() == null)
+                throw new DbException("Department can't be null");
+            if (obj.getBirthDate() == null)
+                throw new DbException("Birth Date can't be null");
+            if (obj.getBaseSalary() == null)
+                throw new DbException("Base salary can't be null");
+
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+            st.setDouble(4, obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+            st.setInt(6, obj.getId());
+
+            st.executeUpdate();
+       } catch (SQLException e) {
+           throw new DbException(e.getMessage());
+       } finally {
+           DB.closeStatement(st);
+       }    
     }
 
     @Override
