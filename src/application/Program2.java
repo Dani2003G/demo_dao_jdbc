@@ -1,5 +1,6 @@
 package application;
 
+import java.util.List;
 import java.util.Scanner;
 
 import model.dao.DaoFactory;
@@ -33,6 +34,10 @@ public class Program2 {
         dep.setName("Drinks");
         depDao.updated(dep);
         System.out.println("Update complete");
+
+        System.out.println("\n=== TEST 5: department find all ===");
+        List<Department> list = depDao.findAll();
+        list.forEach(System.out::println);
 
         sc.close();
     }
