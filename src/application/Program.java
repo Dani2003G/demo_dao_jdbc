@@ -25,7 +25,7 @@ public class Program {
         List<Seller> list = sellerDao.findByDepartment(department);
         list.forEach(System.out::println);
 
-        System.out.println("\n=== TEST 3: seller findByAll ===");
+        System.out.println("\n=== TEST 3: seller findAll ===");
         list = sellerDao.findAll();
         list.forEach(System.out::println);
 
@@ -34,7 +34,7 @@ public class Program {
         sellerDao.insert(newSeller);
         System.out.println("Inserted! New id = " + newSeller.getId());
 
-        System.out.println("\n=== TEST 5: seller insert ===");
+        System.out.println("\n=== TEST 5: seller update ===");
         seller = sellerDao.findById(1);
         seller.setName("Martha Waine");
         sellerDao.updated(seller);

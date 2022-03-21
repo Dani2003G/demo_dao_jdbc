@@ -14,7 +14,7 @@ import model.entities.Department;
 
 public class DepartmentDaoJDBC implements DepartmentDao {
 
-    private static Connection conn;
+    private Connection conn;
 
     public DepartmentDaoJDBC(Connection conn) {
         this.conn = conn;
@@ -62,8 +62,25 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
     @Override
     public void deleteById(Integer id) {
-        // TODO Auto-generated method stub
-        
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement(
+                "DELETE FROM department "
+                + "WHERE Id = ?"
+            );
+
+            st.setInt(1, id);
+
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected == 0)
+                throw new DbException("This id doesn't exist in the database");
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
