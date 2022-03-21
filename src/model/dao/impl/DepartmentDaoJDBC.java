@@ -48,6 +48,8 @@ public class DepartmentDaoJDBC implements DepartmentDao {
                     obj.setId(id);
                 }
                 DB.closeResultSet(rs);
+            } else {
+                throw new DbException("Unexpected error! No rows affected");
             }
 
         } catch (SQLException e) {
@@ -154,7 +156,7 @@ public class DepartmentDaoJDBC implements DepartmentDao {
 
         try {
             st = conn.prepareStatement(
-                "SELECT * FROM department"
+                "SELECT * FROM department ORDER BY Name"
             );
 
             rs = st.executeQuery();
