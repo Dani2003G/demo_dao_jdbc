@@ -24,7 +24,15 @@ public class Program2 {
         depDao.deleteById(id);
         System.out.println("Delete completed");
 
+        System.out.println("\n=== TEST 3: department findById ===");
+        dep = depDao.findById(4);
+        System.out.println(dep);
 
+        System.out.println("\n=== TEST 4: department update ===");
+        dep = depDao.findById(11);
+        dep.setName("Drinks");
+        depDao.updated(dep);
+        System.out.println("Update complete");
 
         sc.close();
     }
